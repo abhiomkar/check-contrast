@@ -1,0 +1,9 @@
+@import "@material/typography/mixins";
+
+.section-title {
+  @include mdc-typography(button);
+
+  color: rgba(0, 0, 0, .54);
+  padding-top: 12px;
+  display: flex;
+}

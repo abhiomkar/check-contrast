@@ -1,0 +1,29 @@
+@import "@material/typography/mixins";
+
+.logo-title-container {
+  display: inline-flex;
+  align-items: center;
+}
+
+.logo-subtitle {
+  @include mdc-typography(caption);
+
+  margin: 16px 0 16px 0;
+  line-height: 1.6;
+  color: rgba(black, 0.54);
+  font-size: 0.85rem;
+  max-width: 520px;
+}
+
+.logo-title {
+  margin-left: 12px;
+  color: #424242;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.logo-root {
+  display: flex;
+  flex-direction: column;
+}

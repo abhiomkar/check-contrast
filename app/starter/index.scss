@@ -1,0 +1,19 @@
+@import "@material/button/mdc-button";
+@import "@material/button/mixins";
+
+html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.mdc-button {
+  @include mdc-button-container-fill-color(#FFDBD0);
+  @include mdc-button-ink-color(#452c2f);
+}

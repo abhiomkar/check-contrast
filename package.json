@@ -1,0 +1,22 @@
+{
+  "name": "material-template",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.html",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "dependencies": {
+    "lit-html": "^1.1.2",
+    "material-components-web": "^4.0.0",
+    "parcel-bundler": "^1.12.4"
+  },
+  "devDependencies": {
+    "sass": "^1.21.0",
+    "tslib": "^1.10.0",
+    "typescript": "^3.5.2"
+  },
+  "browserslist": [
+    "last 1 chrome versions"
+  ]
+}
