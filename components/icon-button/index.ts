@@ -7,6 +7,7 @@ interface IconButtonOptions {
   iconName: string,
   ariaLabel: string,
   classes: Object,
+  onClick: Function,
 }
 
 const initRipple = directive(() => (part) => {
@@ -16,14 +17,14 @@ const initRipple = directive(() => (part) => {
   });
 });
 
-export const iconButton = ({iconName, ariaLabel, classes}: Partial<IconButtonOptions> = {}) => {
+export const iconButton = ({iconName, ariaLabel, classes, onClick}: Partial<IconButtonOptions> = {}) => {
   const rootClasses = classMap(Object.assign({}, {
       'mdc-icon-button': true,
       'material-icons': true,
   }, classes));
 
   return html`
-  <button class=${rootClasses} aria-label=${ariaLabel} .onRender=${initRipple()}>
+  <button class=${rootClasses} aria-label=${ariaLabel} @click=${onClick} .onRender=${initRipple()}>
     ${iconName}
   </button>`;
 }

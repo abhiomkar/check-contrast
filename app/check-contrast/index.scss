@@ -1,0 +1,176 @@
+$mdc-button-maximum-height: 48px;
+$mdc-theme-primary: #152c54;
+$mdc-theme-secondary: #152c54;
+
+@import "@material/button/mdc-button";
+@import "@material/textfield/mdc-text-field";
+@import "@material/icon-button/mdc-icon-button";
+@import "@material/icon-button/mixins";
+@import "@material/typography/mixins";
+@import "@material/button/mixins";
+@import "@material/textfield/mixins";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+$font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+html {
+  height: 100%;
+}
+
+body {
+  @include mdc-typography(body1, $exclude-props : (font-family));
+  font-family: $font-family;
+
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.app {
+  width: 100%;
+  display: block;
+}
+
+.color-input-panel {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 36px;
+  padding: 0 12px;
+}
+
+.color-input-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.color-input-column {
+  display: flex;
+  align-items: flex-start;
+}
+
+.color-input-label {
+  font-size: .8125rem;
+  color: rgba(0, 0, 0, .84);
+  padding-bottom: 4px;
+  display: inline-flex;
+  padding-left: 4px;
+}
+
+.color-fix-button {
+  @include mdc-button-density(1);
+
+  margin-left: 8px;
+  font-family: $font-family;
+}
+
+:root {
+  --color-foreground:#FFA2CF;
+  --color-background:#152C54;
+}
+
+.color-canvas {
+  width: 100%;
+  padding: 0 12px;
+  color: var(--color-foreground);
+  background: var(--color-background);
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.color-check-contrast-title {
+  font-size: 2rem;
+  font-weight: bold;
+  white-space: nowrap;
+  margin-top: 12px;
+}
+
+.color-contrast-rating-text {
+  font-size: 2.4rem;
+  font-weight: bold;
+}
+
+.color-contrast-title-row {
+  margin-bottom: 12px;
+}
+
+.color-canvas-rating-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.color-canvas-small-text {
+  @include mdc-typography(subtitle1, $exclude-props : (font-family));
+
+  margin-top: 16px;
+}
+
+.color-contrast-ratio {
+  @include mdc-typography(headline6);
+}
+
+.color-canvas-center {
+  max-width: 674px;
+  width: 100%;
+}
+
+.color-input-wrapper {
+  position: relative;
+}
+
+.color-native-input-mask {
+  position: absolute;
+  height: 32px;
+  width: 32px;
+  border-radius: 4px;
+  top: 4px;
+  left: 4px;
+  overflow: hidden;
+}
+
+.color-native-input {
+  border: 0;
+  height: 48px;
+  width: 48px;
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  cursor: pointer;
+}
+
+.color-input-text-field {
+  @include mdc-text-field-outlined-with-leading-icon-density(-4);
+}
+
+.color-input-container {
+  display: flex;
+}
+
+.color-swap-button {
+  @include mdc-icon-button-density(-2);
+  @include mdc-icon-button-ink-color(#292929);
+
+  margin: 18px 12px 12px 12px;
+}
+
+.flex {
+  display: flex;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}

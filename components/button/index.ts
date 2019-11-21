@@ -4,6 +4,7 @@ import { classMap } from 'lit-html/directives/class-map';
 import { registerConnectedCallback } from '../common/render';
 
 interface ButtonOptions {
+  id: string,
   classes: Object,
   label: string,
   iconName: string,
@@ -44,7 +45,7 @@ const initRipple = directive(() => (part) => {
   registerConnectedCallback(() => MDCRipple.attachTo(part.committer.element));
 });
 
-export const button = ({classes, label, iconName, trailingIconName, raised, unelevated, outlined, onClick}: Partial<ButtonOptions> = {}) => {
+export const button = ({classes, label, iconName, trailingIconName, raised, unelevated, outlined, onClick, id}: Partial<ButtonOptions> = {}) => {
   const rootClasses = classMap(Object.assign({
     'mdc-button': true,
     'mdc-button--raised': !!raised,
@@ -53,7 +54,7 @@ export const button = ({classes, label, iconName, trailingIconName, raised, unel
   }, classes));
 
   return html`
-    <button @click=${onClick} class=${rootClasses} .onRender=${initRipple()}>
+    <button @click=${onClick} id=${id} class=${rootClasses} .onRender=${initRipple()}>
       <div class="mdc-button__ripple"></div>
       ${icon({iconName})}
       <span class="mdc-button__label">${label}</span>

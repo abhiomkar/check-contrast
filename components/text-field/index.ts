@@ -16,6 +16,7 @@ interface TextFieldOptions {
   outlined: boolean,
   helperText: string,
   characterLimit: number,
+  onInput: Function,
 }
 
 interface InputOptions {
@@ -24,9 +25,10 @@ interface InputOptions {
   placeholder: string,
   value: string,
   characterLimit: number,
+  onInput: Function,
 }
 
-const input = ({ labelId, ariaLabel, placeholder, value, characterLimit }: Partial<InputOptions> = {}) => {
+const input = ({ labelId, ariaLabel, placeholder, value, characterLimit, onInput }: Partial<InputOptions> = {}) => {
   return html`<input
     type="text"
     class="mdc-text-field__input"
@@ -34,7 +36,8 @@ const input = ({ labelId, ariaLabel, placeholder, value, characterLimit }: Parti
     aria-label=${ariaLabel || null}
     placeholder=${placeholder || ''}
     maxlength=${characterLimit || ''}
-    value=${value || ''}
+    .value=${value || ''}
+    @input=${onInput}
     />`;
 };
 
@@ -42,13 +45,14 @@ const initTextField = directive(() => (part) => {
   registerConnectedCallback(() => MDCTextField.attachTo(part.committer.element));
 });
 
-export const textField = ({ classes, outlined, leadingIconName, trailingIconName, ariaLabel, placeholder, helperText, label, value, characterLimit }: Partial<TextFieldOptions> = {}) => {
+export const textField = ({ classes, outlined, leadingIconName, trailingIconName, ariaLabel, placeholder, helperText, label, value, characterLimit, onInput }: Partial<TextFieldOptions> = {}) => {
   const rootClasses = classMap(Object.assign({}, {
     'mdc-text-field': true,
     'mdc-text-field--default': !outlined,
     'mdc-text-field--outlined': outlined,
     'mdc-text-field--with-leading-icon': !!leadingIconName,
     'mdc-text-field--with-trailing-icon': !!trailingIconName,
+    'mdc-text-field--no-label': !label,
   }, classes));
   const labelId = getId();
   const floatingLabelClasses = classMap({
@@ -61,16 +65,18 @@ export const textField = ({ classes, outlined, leadingIconName, trailingIconName
   })
 
   if (outlined) {
+    const labelTemplate = html`<label class=${floatingLabelClasses}>${label}</label>`;
+
     return html`
     <div class="mdc-text-field-container">
       <div class=${rootClasses} .onRender=${initTextField()}>
         ${icon({ iconName: leadingIconName })}
-        ${input({ labelId, ariaLabel, placeholder, value, characterLimit })}
+        ${input({ labelId, ariaLabel, placeholder, value, characterLimit, onInput })}
         ${icon({ iconName: trailingIconName })}
         <div class=${notchedOutlineClasses}>
           <div class="mdc-notched-outline__leading"></div>
           <div class="mdc-notched-outline__notch">
-            <label class=${floatingLabelClasses}>${label}</label>
+            ${label ? labelTemplate : null}
           </div>
           <div class="mdc-notched-outline__trailing"></div>
         </div>
@@ -82,7 +88,7 @@ export const textField = ({ classes, outlined, leadingIconName, trailingIconName
     <div class="mdc-text-field-container">
       <div class=${rootClasses} .onRender=${initTextField()}>
         ${icon({ iconName: leadingIconName })}
-        ${input({ labelId, ariaLabel, placeholder, value, characterLimit })}
+        ${input({ labelId, ariaLabel, placeholder, value, characterLimit, onInput })}
         <label class=${floatingLabelClasses} for=${labelId}>${label}</label>
         ${icon({ iconName: trailingIconName })}
         <div class="mdc-line-ripple"></div>

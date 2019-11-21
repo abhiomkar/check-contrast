@@ -7,6 +7,7 @@
     "start": "parcel index.html"
   },
   "dependencies": {
+    "color": "^3.1.2",
     "lit-html": "^1.1.2",
     "material-components-web": "^4.0.0",
     "parcel-bundler": "^1.12.4"
@@ -14,7 +15,7 @@
   "devDependencies": {
     "sass": "^1.21.0",
     "tslib": "^1.10.0",
-    "typescript": "^3.5.2"
+    "typescript": "^3.7.2"
   },
   "browserslist": [
     "last 1 chrome versions"
