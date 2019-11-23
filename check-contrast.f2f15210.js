@@ -226,4 +226,4 @@ var e=require("./conversions"),n=require("./route"),r={},o=Object.keys(e);functi
   </div>
   `};let k={foregroundColor:getComputedStyle(A).getPropertyValue("--color-foreground"),backgroundColor:getComputedStyle(A).getPropertyValue("--color-background")};const C=(o,r=0)=>{k=Object.assign({},k,o),m(k,r)};let x;const m=(o,t=0)=>{x&&clearTimeout(x),x=setTimeout(()=>{(0,r.render)(b(o),document.querySelector(".app"))},t)};m(k);
 },{"lit-html":"KMqM","../../components/common/render":"IQIU","../../components/button":"STC6","../../components/icon-button":"wYgu","../../components/text-field":"EWLv","color":"gOV4","./index.scss":"NpYh"}]},{},["YYIa"], null)
-//# sourceMappingURL=/check-contrast.f2f15210.js.map
+//# sourceMappingURL=check-contrast.f2f15210.js.map
