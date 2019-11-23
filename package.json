@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "color": "^3.1.2",
+    "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "material-components-web": "^4.0.0",
     "parcel-bundler": "^1.12.4"

@@ -21,6 +21,9 @@ const colorInput = ({id, label, color, onInput, onTextInput, fixButton}: Partial
     <label class="color-input-label" for=${id}>${label}</label>
     <div class="color-input-container">
       <div class="color-input-wrapper">
+        <div class="color-native-input-mask">
+          <input class="color-native-input" .value=${Color(color).hex()} @input=${onInput} type="color" id=${id} />
+        </div>
         ${textField({
           value: color,
           outlined: true,
@@ -28,9 +31,6 @@ const colorInput = ({id, label, color, onInput, onTextInput, fixButton}: Partial
           onInput: onTextInput,
           classes: {'color-input-text-field': true},
         })}
-        <div class="color-native-input-mask">
-          <input class="color-native-input" .value=${Color(color).hex()} @input=${onInput} type="color" id=${id} />
-        </div>
       </div>
       ${fixButton}
     </div>
@@ -98,6 +98,10 @@ const fixForegroundColor = () => {
 
   while (Color(background).contrast(Color(foreground)) < targetContrastRatio) {
     foreground = isBackgroundLight ? foreground.darken(.05) : foreground.lighten(.05);
+
+    if (foreground.hex() === '#FFFFFF' || foreground.hex() === '#000000') {
+      break;
+    }
   }
 
   setState({foregroundColor: foreground.hex()});
@@ -112,6 +116,10 @@ const fixBackgroundColor = () => {
   const isForegroundLight = foreground.isLight();
   while (Color(background).contrast(Color(foreground)) < targetContrastRatio) {
     background =  isForegroundLight ? background.darken(.05) : background.lighten(.05);
+
+    if (background.hex() === '#FFFFFF' || background.hex() === '#000000') {
+      break;
+    }
   }
 
   setState({backgroundColor: background.hex()});
@@ -119,6 +127,7 @@ const fixBackgroundColor = () => {
 };
 
 const root = document.documentElement;
+const WCAGLink = 'https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html';
 
 const app = ({foregroundColor, backgroundColor}: State) => {
   const contrastRating = checkContrastRating(foregroundColor, backgroundColor);
@@ -152,7 +161,7 @@ const app = ({foregroundColor, backgroundColor}: State) => {
 
   return html`
   <div class="color-canvas" .onRender=${onRender()}>
-    <div class="color-canvas-center">
+    <div class="color-canvas-center p-top-24 p-bottom-24">
       <div class="color-canvas-header">
         <div class="color-canvas-rating-row">
           <div class="color-contrast-rating-text">
@@ -168,6 +177,10 @@ const app = ({foregroundColor, backgroundColor}: State) => {
       <div class="color-canvas-small-text">
         Choose <strong>foreground color</strong> and <strong>background color</strong> below
         to check color contrast. Fix contrast ratio by clicking on <i>Fix</i> button when failed.
+      </div>
+      <div class="p-top-16 flex">
+        <div class="material-icons">accessibility_new</div>
+        <div class="material-icons p-left-4">check_circle</div>
       </div>
     </div>
   </div>
@@ -200,6 +213,7 @@ const app = ({foregroundColor, backgroundColor}: State) => {
         ${iconButton({
           iconName: 'swap_horizontal_circle_black',
           classes: {'color-swap-button': true},
+          ariaLabel: 'Swap colors',
           onClick: () => {
             setState({foregroundColor: state.backgroundColor, backgroundColor: state.foregroundColor});
             root.style.setProperty('--color-foreground', state.foregroundColor);
@@ -230,6 +244,27 @@ const app = ({foregroundColor, backgroundColor}: State) => {
           fixButton: backgroundFixButton,
         })}
       </div>
+    </div>
+  </div>
+  <div class="flex justify-center bg-grey-100 b-top-grey-200 m-top-160 c-grey-700" style="bottom: 0; left: 0; right: 0">
+    <div style="max-width: 674px" class="fs-14 lh-24 p-left-8 p-right-8">
+      <p class="p-top-32">
+        <a href=${WCAGLink} target="_blank">WCAG 2.0</a> (Web Content Accessibility Guidelines) requires sufficient
+        contrast ratio between foreground color and background color.
+        <ul class="p-left-32 p-top-8">
+          <li>Level AA requires at least 4.5:1 for normal text and 3:1 for large text.</li>
+          <li>WCAG 2.1 requires a contrast ratio of at least 3:1 for graphics and user interface components (such as form input borders).
+          <li>WCAG Level AAA requires a contrast ratio of at least 7:1 for normal text and 4.5:1 for large text.</li>
+        </ul>
+      </p>
+
+      <p class="p-top-8 p-bottom-32">
+        Large text is defined as 14 point (typically 18.66px) and bold or larger, or 18 point (typically 24px) or larger.
+      </p>
+
+      <p class="p-bottom-32">
+        Source code on <a href="https://github.com/abhiomkar/check-contrast" target="_blank">GitHub</a>.
+      </p>
     </div>
   </div>
   `;
