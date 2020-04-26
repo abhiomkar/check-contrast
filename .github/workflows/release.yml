@@ -1,0 +1,26 @@
+on:
+  push:
+
+name: Create Release
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Read version
+        id: read_version
+        run: |
+          echo "::set-output name=version::v$(npm run version --silent)"
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.read_version.outputs.version }}
+          release_name: ${{ steps.read_version.outputs.version }}
+          body: |
+            See CHANGELOG file to see what's changed in new release.
