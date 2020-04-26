@@ -1,0 +1,39 @@
+on:
+  push:
+
+name: Create Release
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Fetch all tags
+        run: |
+          git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+      - name: Read version
+        id: read_version
+        run: |
+          echo "::set-output name=version::v$(npm run version --silent)"
+      - name: Check if release tag is already created
+        id: vars
+        run: |
+          version=${{ steps.read_version.outputs.version }}
+          if [[ -z $(git tag -l "$version") ]]; then
+            echo "Proceeding to create new release"
+          else
+            echo "New release already created, exiting."
+            exit 1
+          fi
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.read_version.outputs.version }}
+          release_name: ${{ steps.read_version.outputs.version }}
+          body: |
+            See CHANGELOG file to see what's changed in new release.

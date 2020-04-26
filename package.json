@@ -1,10 +1,11 @@
 {
   "name": "material-template",
-  "version": "0.0.0",
+  "version": "0.0.6",
   "private": true,
   "main": "index.html",
   "scripts": {
-    "start": "parcel index.html"
+    "start": "parcel index.html",
+    "version": "cat package.json | grep -e '^  \"version\": ' | awk '{print $2}' | sed 's/[\",]//g'"
   },
   "dependencies": {
     "color": "^3.1.2",
